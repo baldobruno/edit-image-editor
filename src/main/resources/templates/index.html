@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Office 21</title>
+	<script type="text/javascript" th:src="@{https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js}"></script>
+	<link rel="stylesheet" th:href="@{/css/ionic.bundle.css}" />
+</head>
+
+<body>
+	<ion-app>
+		<ion-header>
+			<ion-toolbar>
+				<ion-img th:src="@{office 21.png}" alt="Office 21"></ion-img>
+			</ion-toolbar>
+		</ion-header>
+		<ion-content>
+			<form th:action="@{/api/add-text-to-image}" method="get">
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-item lines=none>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col size-sm="3" offset-sm="3">
+							<ion-item>
+								<ion-input type="text" th:value="${tette}" name="text" placeholder="Inserisci Nome Cognome">
+								</ion-input>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col>
+							<ion-item lines=none>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col>
+							<ion-item lines=none>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col>
+							<ion-item lines=none>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-row style="width: 100%;">
+						<ion-button type="submit" style="width: 100%;" expand="full" color="primary">Stampa Biglietto
+						</ion-button>
+					</ion-row>
+				</ion-grid>
+			</form>
+		</ion-content>
+	</ion-app>
+</body>
+
+</html>
