@@ -4,12 +4,12 @@ RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
 COPY . .
 RUN chmod +x mvnw
-RUN ./mvnw clean install
+RUN ./mvnw clean package
 
 FROM openjdk:17-jdk-slim
 
 EXPOSE 8080
 
-COPY --from=build /build/libs/image-editor-1.jar app.jar
+COPY --from=build /build/libs/image-editor-api-1.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
