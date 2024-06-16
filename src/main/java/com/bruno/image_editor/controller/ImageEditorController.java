@@ -11,11 +11,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 import javax.imageio.ImageIO;
 
+import org.apache.logging.slf4j.SLF4JLogger;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -32,18 +36,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ImageEditorController {
 
+	private static Logger logger = LoggerFactory.getLogger(ImageEditorController.class);
+
 	@GetMapping("/add-text-to-image")
 	public ResponseEntity<Resource> addTextToImage(@RequestParam(value = "text", required = true) String text)
 			throws IOException {
+		logger.error("riga 43" + text);
 		InputStream initialStream = new ClassPathResource("/static/Office21.jpg").getInputStream();
-	    File targetFile = File.createTempFile("ciao", ".jpg");
-
-	    java.nio.file.Files.copy(
-	      initialStream, 
-	      targetFile.toPath(), 
-	      StandardCopyOption.REPLACE_EXISTING);
-
-	    IOUtils.closeQuietly(initialStream);
+		logger.error("riga 45" + initialStream);
+		File targetFile = File.createTempFile("ciao", ".jpg");
+		logger.error("riga 48 - il file esiste???" + targetFile.exists());
+		Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		logger.error("riga 50 - il file esiste???" + targetFile.exists());
+		IOUtils.closeQuietly(initialStream);
+		logger.info("riga 52" + targetFile.getAbsolutePath());
 		BufferedImage image = ImageIO.read(targetFile);
 		Font font = new Font("Arial", Font.BOLD, 100);
 		Graphics g = image.getGraphics();
