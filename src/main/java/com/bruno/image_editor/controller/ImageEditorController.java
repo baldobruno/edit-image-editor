@@ -36,7 +36,7 @@ public class ImageEditorController {
 	public ResponseEntity<Resource> addTextToImage(@RequestParam(value = "text", required = true) String text)
 			throws IOException {
 		InputStream initialStream = new ClassPathResource("/static/Office21.jpg").getInputStream();
-	    File targetFile = new File("ciao.jpg");
+	    File targetFile = File.createTempFile("ciao", ".jpg");
 
 	    java.nio.file.Files.copy(
 	      initialStream, 
