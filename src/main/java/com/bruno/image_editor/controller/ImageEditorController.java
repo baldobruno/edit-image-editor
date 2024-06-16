@@ -48,7 +48,7 @@ public class ImageEditorController {
 		logger.error("riga 48 - il file esiste???" + targetFile.exists());
 		Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		logger.error("riga 50 - il file esiste???" + targetFile.exists());
-		IOUtils.closeQuietly(initialStream);
+
 		logger.info("riga 52" + targetFile.getAbsolutePath());
 		BufferedImage image = ImageIO.read(targetFile);
 		Font font = new Font("Arial", Font.BOLD, 100);
@@ -83,6 +83,7 @@ public class ImageEditorController {
 		// Download the image with added text as a jpeg
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write(image, "jpg", baos);
+		initialStream.close();
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentDisposition(ContentDisposition.attachment().build());
 		return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.IMAGE_JPEG)
