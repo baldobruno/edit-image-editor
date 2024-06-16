@@ -12,4 +12,4 @@ EXPOSE 8080
 
 COPY --from=build /target/image-editor-api-1.jar app.jar
 
-ENTRYPOINT ["java", "-cp", "app.jar", "Main"]
+ENTRYPOINT ["java", "-cp", "app.jar", "com.bruno.image_editor.ImageEditorApplication"]
