@@ -14,8 +14,9 @@
 	<version>1</version>
 	<name>image-editor</name>
 	<description>A project for editing images</description>
+	<packaging>jar</packaging>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
