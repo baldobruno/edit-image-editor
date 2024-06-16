@@ -56,7 +56,9 @@ public class ImageEditorController {
 		IOUtils.closeQuietly(initialStream);
 		logger.info("riga 52" + targetFile.getAbsolutePath());
 		BufferedImage image = ImageIO.read(targetFile);
+		logger.error("riga 59: mi mancano i font");
 		Font font = new Font("Arial", Font.BOLD, 100);
+		logger.error("riga 61: trovato font");
 		Graphics g = image.getGraphics();
 
 		FontMetrics ruler = g.getFontMetrics(font);
