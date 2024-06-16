@@ -10,6 +10,5 @@ FROM openjdk:17-jdk-slim
 
 EXPOSE 8080
 
-COPY --from=build /build/libs/image-editor-api-1.jar app.jar
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "/target/image-editor-api-1.jar"]
