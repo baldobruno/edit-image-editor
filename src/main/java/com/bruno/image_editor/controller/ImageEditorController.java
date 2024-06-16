@@ -2,6 +2,7 @@ package com.bruno.image_editor.controller;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Shape;
@@ -13,9 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.PosixFilePermission;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -42,7 +40,7 @@ public class ImageEditorController {
 
 	@GetMapping("/add-text-to-image")
 	public ResponseEntity<Resource> addTextToImage(@RequestParam(value = "text", required = true) String text)
-			throws IOException {
+			throws IOException, FontFormatException {
 		logger.error("riga 43" + text);
 		InputStream initialStream = new ClassPathResource("/static/Office21.jpg").getInputStream();
 		logger.error("riga 45" + initialStream);
@@ -57,7 +55,16 @@ public class ImageEditorController {
 		logger.info("riga 52" + targetFile.getAbsolutePath());
 		BufferedImage image = ImageIO.read(targetFile);
 		logger.error("riga 59: mi mancano i font");
-		Font font = new Font("Arial", Font.BOLD, 100);
+		InputStream fontInputStream = new ClassPathResource("/static/ARIAL.TTF").getInputStream();
+		File fontFile = File.createTempFile("ARIAL", ".TTF");
+		Files.copy(fontInputStream, fontFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		logger.error("riga 64 - il file esiste???" + fontFile.exists());
+
+		fontFile.setReadable(true);
+		fontFile.setWritable(true);
+		IOUtils.closeQuietly(fontInputStream);
+		Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+		font = font.deriveFont(Font.BOLD, 100f);
 		logger.error("riga 61: trovato font");
 		Graphics g = image.getGraphics();
 
