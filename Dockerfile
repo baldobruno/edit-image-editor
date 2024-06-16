@@ -7,7 +7,7 @@ COPY . .
 RUN chmod +x mvnw
 RUN ./mvnw clean package
 
-FROM openjdk:17-jdk-slim
+FROM amazoncorretto:17
 
 EXPOSE 8080
 
