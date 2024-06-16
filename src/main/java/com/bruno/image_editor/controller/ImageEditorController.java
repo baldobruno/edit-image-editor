@@ -8,10 +8,14 @@ import java.awt.Shape;
 import java.awt.font.GlyphVector;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.StandardCopyOption;
 
 import javax.imageio.ImageIO;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -31,8 +35,16 @@ public class ImageEditorController {
 	@GetMapping("/add-text-to-image")
 	public ResponseEntity<Resource> addTextToImage(@RequestParam(value = "text", required = true) String text)
 			throws IOException {
-		ClassPathResource resource = new ClassPathResource("/static/Office21.jpg");
-		BufferedImage image = ImageIO.read(resource.getFile());
+		InputStream initialStream = new ClassPathResource("/static/Office21.jpg").getInputStream();
+	    File targetFile = new File("ciao.jpg");
+
+	    java.nio.file.Files.copy(
+	      initialStream, 
+	      targetFile.toPath(), 
+	      StandardCopyOption.REPLACE_EXISTING);
+
+	    IOUtils.closeQuietly(initialStream);
+		BufferedImage image = ImageIO.read(targetFile);
 		Font font = new Font("Arial", Font.BOLD, 100);
 		Graphics g = image.getGraphics();
 
