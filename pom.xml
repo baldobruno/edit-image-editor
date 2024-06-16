@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.bruno</groupId>
 	<artifactId>image-editor-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<name>image-editor</name>
 	<description>A project for editing images</description>
 	<properties>
