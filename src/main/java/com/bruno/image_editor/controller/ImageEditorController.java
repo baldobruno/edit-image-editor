@@ -13,10 +13,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.PosixFilePermission;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import org.apache.logging.slf4j.SLF4JLogger;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,9 @@ public class ImageEditorController {
 		Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		logger.error("riga 50 - il file esiste???" + targetFile.exists());
 
+		targetFile.setReadable(true);
+		targetFile.setWritable(true);
+		IOUtils.closeQuietly(initialStream);
 		logger.info("riga 52" + targetFile.getAbsolutePath());
 		BufferedImage image = ImageIO.read(targetFile);
 		Font font = new Font("Arial", Font.BOLD, 100);
@@ -83,7 +88,6 @@ public class ImageEditorController {
 		// Download the image with added text as a jpeg
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write(image, "jpg", baos);
-		initialStream.close();
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentDisposition(ContentDisposition.attachment().build());
 		return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.IMAGE_JPEG)
